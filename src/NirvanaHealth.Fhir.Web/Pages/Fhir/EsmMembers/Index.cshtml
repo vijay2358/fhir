@@ -1,0 +1,107 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using NirvanaHealth.Fhir.Permissions
+@using NirvanaHealth.Fhir.Web.Pages.Fhir.EsmMembers
+@using NirvanaHealth.Fhir.Web.Menus
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NirvanaHealth.Fhir.Localization
+@inject IHtmlLocalizer<FhirResource> L
+@inject IAuthorizationService Authorization
+@model IndexModel
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.Title = L["EsmMembers"].Value;
+    PageLayout.Content.MenuItemName = FhirMenus.EsmMembers;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Fhir/EsmMembers/index.js" />
+}
+
+@section content_toolbar {
+    @if (await Authorization.IsGrantedAsync(FhirPermissions.EsmMembers.Create))
+    {
+        <abp-button id="NewEsmMemberButton" text="@L["NewEsmMember"].Value" icon="plus" button-type="Primary" />
+    }
+}
+
+<abp-card>
+    <abp-card-body>
+		<abp-row class="mb-3">
+            <abp-column size-md="_12">
+                <form id="SearchForm" autocomplete="off">
+                    <div class="input-group">
+                        <input class="form-control page-search-filter-text" id="FilterText" placeholder="@L["Search"]"/>
+                        <abp-button button-type="Primary" type="submit" icon="search"/>
+                    </div>
+                </form>
+            </abp-column>
+            <abp-column size-md="_12" class="mt-3">
+                <a href="javascript:;" id="AdvancedFilterSectionToggler" class="text-decoration-none">@L["SeeAdvancedFilters"]</a>
+            </abp-column>
+        </abp-row>
+
+        <abp-row id="AdvancedFilterSection" style="display: none;">
+            <abp-column size="_3">
+                <abp-input asp-for="MCPMember_IDFilterMin" label="@L["MinMCPMember_ID"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="MCPMember_IDFilterMax" label="@L["MaxMCPMember_ID"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="LastNameFilter" label="@L["LastName"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="FirstNameFilter" label="@L["FirstName"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="MIddleNameFilter" label="@L["MIddleName"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="SuffixFilter" label="@L["Suffix"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="PreFixFilter" label="@L["PreFix"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DOBFilterMin" label="@L["MinDOB"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DOBFilterMax" label="@L["MaxDOB"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-select asp-for="GenderFilter" label="@L["Gender"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DateofDeathFilterMin" label="@L["MinDateofDeath"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DateofDeathFilterMax" label="@L["MaxDateofDeath"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-select asp-for="RaceFilter" label="@L["Race"].Value" />
+            </abp-column>
+        </abp-row>
+
+        <abp-table striped-rows="true" id="EsmMembersTable">
+            <thead>
+				<tr>
+					<th>@L["Actions"]</th>
+					<th>@L["MCPMember_ID"]</th>
+					<th>@L["LastName"]</th>
+					<th>@L["FirstName"]</th>
+					<th>@L["MIddleName"]</th>
+					<th>@L["Suffix"]</th>
+					<th>@L["PreFix"]</th>
+					<th>@L["DOB"]</th>
+					<th>@L["Gender"]</th>
+					<th>@L["DateofDeath"]</th>
+					<th>@L["Race"]</th>
+
+				</tr>
+            </thead>
+        </abp-table>
+    </abp-card-body>
+</abp-card>

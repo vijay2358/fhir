@@ -1,0 +1,106 @@
+[
+  {
+    "Name": "eternalHealth Freedom (PPO)",
+    "Tiers": [
+      {
+        "Name": "Tier 1 - Excluded OTC",
+        "Drugs": [
+          {
+            "Name": "Lipitor 10 MG Tablet",
+            "PA": true,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Atorvastatin 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Advil 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Abilify 10 MG Tablet",
+            "PA": false,
+            "ST": false,
+            "QL": false
+          }
+        ]
+      },
+      {
+        "Name": "Tier 2 - Non-Formulary",
+        "Drugs": [
+          {
+            "Name": "Lipitor 10 MG Tablet",
+            "PA": true,
+            "ST": true,
+            "QL": false
+          },
+          
+          {
+            "Name": "Abilify 10 MG Tablet",
+            "PA": false,
+            "ST": false,
+            "QL": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "eternalHealth Forever (HMO)",
+    "Tiers": [
+      {
+        "Name": "Tier 1 - Excluded OTC",
+        "Drugs": [
+          {
+            "Name": "Atorvastatin 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": true
+          },
+          {
+            "Name": "Advil 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Abilify 10 MG Tablet",
+            "PA": false,
+            "ST": false,
+            "QL": true
+          }
+        ]
+      },
+      {
+        "Name": "Tier 2 - Non-Formulary",
+        "Drugs": [
+          {
+            "Name": "Lipitor 10 MG Tablet",
+            "PA": true,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Atorvastatin 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": false
+          },
+          {
+            "Name": "Advil 10 MG Tablet",
+            "PA": false,
+            "ST": true,
+            "QL": false
+          }
+
+        ]
+      }
+    ]
+  }
+]

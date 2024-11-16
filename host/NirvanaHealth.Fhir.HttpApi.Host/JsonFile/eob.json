@@ -1,0 +1,102 @@
+{
+  "patient": "0",
+  "eob": [
+    {
+      "eobId": "EOB001",
+      "billableStartDate": "2022-03-25T00:00:00.000Z",
+      "billableEndDate": "2021-06-07T00:00:00.000Z",
+      "createdDate": "2021-06-07T00:00:00.000Z",
+      "insurer": "eternalHealth",
+      "planName": "Forever HMO",
+      "claims": [
+        {
+          "claimId": 1001,
+          "dateOfService": "2021-06-07T00:00:00.000Z",
+          "drugName": "LIPITOR 10 MG TABLET",
+          "drugType": "Brand",
+          "status": "paid",
+          "firstName": "John",
+          "middle": "",
+          "lastName": "Smith",
+          "quantity": 10,
+          "refillNum": 5,
+          "prescriptionId": 198625,
+          "pharmacy": "CVS Pharmacy",
+          "prescriber": "Dr. Angela Jones",
+          "daysSupply": 30,
+          "dawCode": 5,
+          "denialReason": "",
+          "paidToPatient": 123,
+          "paidToProvider": 40
+        },
+        {
+          "claimId": 1002,
+          "dateOfService": "2021-06-07T00:00:00.000Z",
+          "drugName": "LIPITOR 10 MG TABLET",
+          "drugType": "Brand",
+          "status": "denied",
+          "firstName": "John",
+          "middle": "",
+          "lastName": "Smith",
+          "quantity": 10,
+          "refillNum": 5,
+          "prescriptionId": 198625,
+          "pharmacy": "CVS Pharmacy",
+          "prescriber": "Dr. Angela Jones",
+          "daysSupply": 30,
+          "dawCode": 5,
+          "denialReason": "Pharmacy Not In Network",
+        }
+      ]
+    },
+    {
+      "eobId": "EOB002",
+      "billableStartDate": "2022-03-25T00:00:00.000Z",
+      "billableEndDate": "2021-06-07T00:00:00.000Z",
+      "createdDate": "2021-06-07T00:00:00.000Z",
+      "insurer": "eternalHealth",
+      "planName": "Forever HMO",
+      "claims": [
+        {
+          "claimId": 1003,
+          "dateOfService": "2021-06-07T00:00:00.000Z",
+          "drugName": "LIPITOR 10 MG TABLET",
+          "drugType": "Brand",
+          "status": "paid",
+          "firstName": "John",
+          "middle": "",
+          "lastName": "Smith",
+          "quantity": 10,
+          "refillNum": 5,
+          "prescriptionId": 198625,
+          "pharmacy": "CVS Pharmacy",
+          "prescriber": "Dr. Angela Jones",
+          "daysSupply": 30,
+          "dawCode": 5,
+          "denialReason": "",
+          "paidToPatient": 123,
+          "paidToProvider": 40
+        },
+        {
+          "claimId": 1004,
+          "dateOfService": "2021-06-07T00:00:00.000Z",
+          "drugName": "LIPITOR 10 MG TABLET",
+          "drugType": "Brand",
+          "status": "denied",
+          "firstName": "John",
+          "middle": "",
+          "lastName": "Smith",
+          "quantity": 10,
+          "refillNum": 5,
+          "prescriptionId": 198625,
+          "pharmacy": "CVS Pharmacy",
+          "prescriber": "Dr. Angela Jones",
+          "daysSupply": 30,
+          "dawCode": 5,
+          "denialReason": "Pharmacy Not In Network"
+        }
+      ]
+    }
+    
+  ]
+}

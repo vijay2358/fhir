@@ -1,0 +1,92 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using NirvanaHealth.Fhir.Permissions
+@using NirvanaHealth.Fhir.Web.Pages.Fhir.Businesses
+@using NirvanaHealth.Fhir.Web.Menus
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NirvanaHealth.Fhir.Localization
+@inject IHtmlLocalizer<FhirResource> L
+@inject IAuthorizationService Authorization
+@model IndexModel
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.Title = L["Businesses"].Value;
+    PageLayout.Content.MenuItemName = FhirMenus.Businesses;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Fhir/Businesses/index.js" />
+}
+
+@section content_toolbar {
+    @if (await Authorization.IsGrantedAsync(FhirPermissions.Businesses.Create))
+    {
+        <abp-button id="NewBusinessButton" text="@L["NewBusiness"].Value" icon="plus" button-type="Primary" />
+    }
+}
+
+<abp-card>
+    <abp-card-body>
+		<abp-row class="mb-3">
+            <abp-column size-md="_12">
+                <form id="SearchForm" autocomplete="off">
+                    <div class="input-group">
+                        <input class="form-control page-search-filter-text" id="FilterText" placeholder="@L["Search"]"/>
+                        <abp-button button-type="Primary" type="submit" icon="search"/>
+                    </div>
+                </form>
+            </abp-column>
+            <abp-column size-md="_12" class="mt-3">
+                <a href="javascript:;" id="AdvancedFilterSectionToggler" class="text-decoration-none">@L["SeeAdvancedFilters"]</a>
+            </abp-column>
+        </abp-row>
+
+        <abp-row id="AdvancedFilterSection" style="display: none;">
+            <abp-column size="_3">
+                <abp-input asp-for="Business_IDFilterMin" label="@L["MinBusiness_ID"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="Business_IDFilterMax" label="@L["MaxBusiness_ID"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="BusinessNameFilter" label="@L["BusinessName"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="BusinessCodeFilter" label="@L["BusinessCode"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="BusinessCatFilterMin" label="@L["MinBusinessCat"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="BusinessCatFilterMax" label="@L["MaxBusinessCat"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="TrackerCodeFilter" label="@L["TrackerCode"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DBAFilter" label="@L["DBA"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="FEINFilter" label="@L["FEIN"].Value" />
+            </abp-column>
+        </abp-row>
+
+        <abp-table striped-rows="true" id="BusinessesTable">
+            <thead>
+				<tr>
+					<th>@L["Actions"]</th>
+					<th>@L["Business_ID"]</th>
+					<th>@L["BusinessName"]</th>
+					<th>@L["BusinessCode"]</th>
+					<th>@L["BusinessCat"]</th>
+					<th>@L["TrackerCode"]</th>
+					<th>@L["DBA"]</th>
+					<th>@L["FEIN"]</th>
+
+				</tr>
+            </thead>
+        </abp-table>
+    </abp-card-body>
+</abp-card>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>NirvanaHealth.Fhir</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NirvanaHealth.Fhir.EntityFrameworkCore.Tests\NirvanaHealth.Fhir.EntityFrameworkCore.Tests.csproj" />
+  </ItemGroup>
+
+</Project>

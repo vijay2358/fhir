@@ -1,0 +1,47 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NirvanaHealth.Fhir.Localization
+@using NirvanaHealth.Fhir.Web.Pages.Fhir.EsmMembers
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using NirvanaHealth.Fhir.EsmMembers;
+@using System.Globalization
+@inject IHtmlLocalizer<FhirResource> L
+@model EditModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/Fhir/EsmMembers/EditModal" autocomplete="off">
+    <abp-modal id="EsmMemberEditModal">
+        <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+                    <abp-input asp-for="Id" />
+                    
+            <abp-input asp-for="EsmMember.MCPMember_ID"/>
+
+            <abp-input asp-for="EsmMember.LastName"/>
+
+            <abp-input asp-for="EsmMember.FirstName"/>
+
+            <abp-input asp-for="EsmMember.MIddleName"/>
+
+            <abp-input asp-for="EsmMember.Suffix"/>
+
+            <abp-input asp-for="EsmMember.PreFix"/>
+
+            <abp-input asp-for="EsmMember.DOB" value="@(Model.EsmMember.DOB?.ToString("yyyy-MM-dd"))" type="date"/>
+
+            <abp-select asp-for="EsmMember.Gender"/>
+
+            <abp-input asp-for="EsmMember.DateofDeath" value="@(Model.EsmMember.DateofDeath?.ToString("yyyy-MM-dd"))" type="date"/>
+
+            <abp-select asp-for="EsmMember.Race"/>
+
+                    
+                
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

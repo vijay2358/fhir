@@ -1,0 +1,131 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- feature
+- develop 
+
+pool:
+  name: 'WebAgent'
+
+variables:
+  Repo: '//rsodvtfs188/MedicalClaimsOutput/'
+  csproj: '$(build.sourcesDirectory)/host/NirvanaHealth.Fhir.HttpApi.Host/NirvanaHealth.Fhir.HttpApi.Host.csproj'
+  appName: 'FHIRAPI'
+  isFeature: $[contains(variables['Build.SourceBranch'], 'feature')]
+
+name: $(Year:yyyy).$(Month).$(DayOfMonth).$(Rev:r)
+
+stages:
+  - stage: BuildFHIRAPI
+    displayName: Build FHIRAPI
+    jobs:
+      - job: Build 
+        displayName: Build API
+        workspace:
+          clean: outputs
+        steps:
+          - checkout: self
+            submodules: true
+        
+        
+          - task: CopyFiles@2
+            displayName: 'Copy Deploy Scripts'
+            inputs:
+              SourceFolder: '//rsodvtfs188/Packages/DevOps'
+              TargetFolder: '$(build.sourcesDirectory)/DevOps'
+              CleanTargetFolder: true
+            
+          
+          - powershell: 'dotnet restore $(csproj)'
+            displayName: 'PowerShell Script'
+          
+          
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet build'
+            inputs:
+              projects: '$(csproj)'
+              arguments: '--configuration Release'
+          
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet publish'
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: '$(csproj)'
+              arguments: '--configuration Release --output $(build.sourcesDirectory)/Publish -r win-x64 --self-contained true'
+              zipAfterPublish: false
+              modifyOutputPath: false
+          
+          - powershell: 'Remove-Item $(build.sourcesDirectory)/Publish/appsettings.json'
+            displayName: 'Remove Appsettings'
+          
+          - task: CopyFiles@2
+            displayName: 'Copy Scripts'
+            inputs:
+              SourceFolder: '$(build.sourcesDirectory)/DevOps/Scripts'
+              TargetFolder: '$(Build.StagingDirectory)/$(appName)-$(Build.BuildNumber)/Scripts'
+              CleanTargetFolder: true
+          
+          - task: CopyFiles@2
+            displayName: 'Copy Config'
+            inputs:
+              SourceFolder: '$(build.sourcesDirectory)/DevOps/Config'
+              TargetFolder: '$(Build.StagingDirectory)/$(appName)-$(Build.BuildNumber)/Config'
+              
+          - task: ArchiveFiles@2
+            displayName: 'Archive Build Artifacts'
+            inputs:
+              rootFolderOrFile: '$(build.sourcesDirectory)/Publish/*'
+              archiveFile: '$(Build.StagingDirectory)/$(appName)-$(Build.BuildNumber)/$(appName).zip'
+          
+          
+          - task: PowerShell@2
+            displayName: 'Create Version Insert Script'
+            inputs:
+              targetType: filePath
+              filePath: '$(build.sourcesDirectory)/DevOps/Config/VersionTable/BuildVersionUpdate.ps1'
+              arguments: '-BaseVersionFilePath "$(build.sourcesDirectory)/DevOps/Config/VersionTable/version.js" -module "FHIRAPI" -version $(Build.BuildNumber) -description "api" -branchName $(Build.SourceBranch) -OutputPath $(Build.StagingDirectory)/$(appName)-$(Build.BuildNumber)/version.js'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: BenefitRepository '
+            inputs:
+              ArtifactName: $(appName)
+              publishLocation: FilePath
+              TargetPath: '$(Repo)'
+
+  - stage: BuildFHIRNuget
+    displayName: Build FHIR Nuget
+    dependsOn: []
+    condition: and(succeeded(), eq(variables.isFeature, true))
+    jobs:
+    - job: BuildNuget
+      displayName: Build Nuget
+      workspace:
+        clean: outputs
+      steps:
+      - checkout: self
+        submodules: true
+
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet build'
+        inputs:  
+           projects: |
+                     $(build.sourcesDirectory)/src/**/*.csproj
+                     $(build.sourcesDirectory)/src/NirvanaHealth.Fhir.Domain.Shared/!**/*.NirvanaHealth - Backup.Fhir.Domain.Shared.csproj
+                               
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet pack'
+        inputs:
+          command: pack
+          versioningScheme: byBuildNumber
+
+
+      - task: NuGetCommand@2
+        displayName: 'NuGet push'
+        inputs:
+          command: push
+          vstsFeed: '/1e9e3cf0-24d0-4042-b886-1a1ea31a3b0b'
+          publishVstsFeed: '/9846f0aa-e4d6-4202-9c39-14be516fa0f6'

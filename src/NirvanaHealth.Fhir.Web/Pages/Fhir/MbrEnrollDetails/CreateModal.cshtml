@@ -1,0 +1,38 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NirvanaHealth.Fhir.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using NirvanaHealth.Fhir.Web.Pages.Fhir.MbrEnrollDetails
+@using NirvanaHealth.Fhir.MbrEnrollDetails;
+@using System.Globalization
+@inject IHtmlLocalizer<FhirResource> L
+@model CreateModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/Fhir/MbrEnrollDetails/CreateModal" autocomplete="off">
+    <abp-modal id="MbrEnrollDetailCreateModal">
+        <abp-modal-header title="@L["NewMbrEnrollDetail"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+                    
+            <abp-input asp-for="MbrEnrollDetail.MbrEnrollDetail_ID"/>
+
+            <abp-input asp-for="MbrEnrollDetail.MCPMember_ID"/>
+
+            <abp-input asp-for="MbrEnrollDetail.BenefitPlan_ID"/>
+
+            <abp-input asp-for="MbrEnrollDetail.Member_ID"/>
+
+            <abp-input asp-for="MbrEnrollDetail.Subscriber_ID"/>
+
+            <abp-input asp-for="MbrEnrollDetail.PersonCode"/>
+
+                    
+                
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

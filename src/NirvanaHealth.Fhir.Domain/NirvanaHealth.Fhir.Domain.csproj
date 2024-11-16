@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>NirvanaHealth.Fhir</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="5.2.1" />
+    <ProjectReference Include="..\NirvanaHealth.Fhir.Domain.Shared\NirvanaHealth.Fhir.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

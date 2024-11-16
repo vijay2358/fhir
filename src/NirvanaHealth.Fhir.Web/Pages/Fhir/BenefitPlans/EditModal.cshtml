@@ -1,0 +1,37 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NirvanaHealth.Fhir.Localization
+@using NirvanaHealth.Fhir.Web.Pages.Fhir.BenefitPlans
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using NirvanaHealth.Fhir.BenefitPlans;
+@using System.Globalization
+@inject IHtmlLocalizer<FhirResource> L
+@model EditModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/Fhir/BenefitPlans/EditModal" autocomplete="off">
+    <abp-modal id="BenefitPlanEditModal">
+        <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+                    <abp-input asp-for="Id" />
+                    
+            <abp-input asp-for="BenefitPlan.BenefitPlan_ID"/>
+
+            <abp-input asp-for="BenefitPlan.BenefitName"/>
+
+            <abp-input asp-for="BenefitPlan.BenefitCode"/>
+
+            <abp-input asp-for="BenefitPlan.Description"/>
+
+            <abp-input asp-for="BenefitPlan.VersionNbr"/>
+
+                    
+                
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>
